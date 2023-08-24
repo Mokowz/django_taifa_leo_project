@@ -9,7 +9,7 @@
 <body>
     <nav class=" navbar navbar-expand-lg bg-dark text-light text-light">
         <div class="container-fluid text-light">
-          <a class="navbar-brand" href="#">Taifa Leo</a>
+          <a class="navbar-brand text-light" href="#">Taifa Leo</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -17,15 +17,15 @@
             {% if user.is_authenticated %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">{{ user.username }}</a>
+                <a class="nav-link active text-light" aria-current="page" href="#">{{ user.username }}</a>
               </li>           
             </ul>
-            <form class="d-flex" role="search">
-              <button class="btn btn-success">
-                <a href="">Change Password</a>
+            <form>
+              <button class="btn btn-white">
+                <a href="" class="text-decoration-none text-light">Change Password</a>
               </button>
-              <button class="btn btn-outline-success" type="submit">
-                    <a href="{% url 'logout' %}">Log Out</a>
+              <button class="btn btn-outline-light" type="submit">
+                    <a href="{% url 'logout' %}" class="text-decoration-none text-light">Log Out</a>
                </button>
             </form>
             {% else %}
