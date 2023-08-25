@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4"><strong>Taifa Leo App</strong></h1>
+    <h1 class="display-4" href="{% url 'home' %}"><strong>Taifa Leo App</strong></h1>
     <p>Step into the heart of Kenyan football with the Taifa Leo app. Unleash your passion for the game by contributing articles on the Kenyan Football League and all things football in Kenya. Share your thoughts, analyses, and captivating stories about the vibrant Kenyan football scene. Stay connected with fellow enthusiasts, celebrate victories, and explore the pulse of football in Kenya, all at your fingertips. Elevate your football experience – use the Taifa Leo app today.</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">View Articles</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button">View Articles</a>
 </div>
 
 {% endblock %}
