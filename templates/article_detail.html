@@ -9,6 +9,6 @@
 </div>
 <p>
     <a href="{% url 'article_edit' article.pk %}" class="text-primary text-decoration-none">Edit</a> | 
-    <a href="#" class="text-danger text-decoration-none">Delete</a>
+    <a href="{% url 'article_delete' article.pk %}" class="text-danger text-decoration-none">Delete</a>
 </p>
 {% endblock %}
