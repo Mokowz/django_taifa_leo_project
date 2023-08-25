@@ -4,7 +4,7 @@
 {% for article in articles %}
 <div class="card mt-3">
     <div class="card-header">
-       <a href="#" class="text-decoration-none text-dark">
+       <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none text-dark">
             <strong >{{ article.title }}</strong>
         </a>
       <span class="text-muted">By {{ article.author }} | {{ article.date }}</span>
@@ -14,12 +14,10 @@
     </div>
     <div class="card-footer text-body-secondary">
         <p>
-            <a href="#" class="text-primary text-decoration-none">Edit</a> | 
+            <a href="{% url 'article_edit' article.pk %}" class="text-primary text-decoration-none">Edit</a> | 
             <a href="#" class="text-danger text-decoration-none">Delete</a>
         </p>
     </div>
   </div>
 {% endfor %}
 {% endblock %}
-
-<!-- {% url 'article_detail' article.pk %} -->
