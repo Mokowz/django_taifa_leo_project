@@ -6,6 +6,7 @@ from django.views.generic import (
 )
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Article
 
@@ -13,26 +14,43 @@ from .models import Article
 class HomePageView(TemplateView):
     template_name = "home.html"
 
-class ArticleListView(ListView):
+class ArticleListView(LoginRequiredMixin, ListView):
+    login_url = "login"
     model = Article
     template_name = "article_list.html"
     context_object_name = "articles"
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
+    login_url = "login"
     model = Article
     template_name = "article_detail.html"
 
-class ArticleCreateView(CreateView):
+    
+
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    login_url = "login"
     model = Article
     template_name = "article_new.html"
-    fields = ["title", "author", "content"]
-    # success_url = reverse_lazy("article_detail")
+    fields = ["title",  "content"]
 
-class ArticleUpdateView(UpdateView):
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class ArticleUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+    login_url = "login"
     model = Article
     template_name = "article_edit.html"
     fields = ["title", "content"]
 
-class ArticleDeleteView(DeleteView):
+    def test_func(self):
+        return self.request.user == self.get_object().author
+
+class ArticleDeleteView(LoginRequiredMixin,UserPassesTestMixin, DeleteView):
+    login_url = "login"
     model = Article
     template_name = "article_delete.html"
+    success_url = reverse_lazy("article_list")
+
+    def test_func(self):
+        return self.request.user == self.get_object().author
