@@ -19,6 +19,7 @@ class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "article_list.html"
     context_object_name = "articles"
+    paginate_by = 2
 
 class ArticleDetailView(LoginRequiredMixin, DetailView):
     login_url = "login"
