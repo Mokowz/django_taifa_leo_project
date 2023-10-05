@@ -8,41 +8,35 @@ from .views import *
 
 # Model Tests
 class ArticleModelTest(TestCase):
+    def setUp(self):
+        self.author = get_user_model().objects.create_user(
+            username="testuser", 
+            password="password"
+        )
+        self.article = Article.objects.create(
+            title="Test Model",
+            date=timezone.now(),
+            content="Example content",
+            author=self.author,
+        )
 
     def test_create_article(self):
-        author = get_user_model().objects.create_user(username="testuser", password="password")
-        article = Article.objects.create(
-            title="Test Model",
-            date=timezone.now(),
-            content="Example content",
-            author=author,
-        )
-
-        self.assertEqual(article.title, "Test Model")
-        self.assertEqual(article.author, author)
+        self.assertEqual(self.article.title, "Test Model")
+        self.assertEqual(self.article.author, self.author)
 
     def test_get_absolute_url(self):
-        author = get_user_model().objects.create_user(username="testuser", password="password")
-        article = Article.objects.create(
-            title="Test Model",
-            date=timezone.now(),
-            content="Example content",
-            author=author,
-        )
-
-        expected_url = reverse("article_detail", args=[str(article.id)])
-        actual_url = article.get_absolute_url()
+        
+        expected_url = reverse("article_detail", args=[str(self.article.id)])
+        actual_url = self.article.get_absolute_url()
         
         self.assertEqual(expected_url, actual_url)
 
     def test_str_method(self):
-        author = get_user_model().objects.create_user(username="testuser", password="password")
-        article = Article.objects.create(
-            title="Test Model",
-            date=timezone.now(),
-            content="Example content",
-            author=author,
-        )
 
-        self.assertEqual(article.__str__(), "Test Model")
+        self.assertEqual(self.article.__str__(), "Test Model")
+
+
+
+class ArticleViewTest(TestCase):
+    pass
 
