@@ -35,3 +35,14 @@ class ArticleModelTest(TestCase):
         
         self.assertEqual(expected_url, actual_url)
 
+    def test_str_method(self):
+        author = get_user_model().objects.create_user(username="testuser", password="password")
+        article = Article.objects.create(
+            title="Test Model",
+            date=timezone.now(),
+            content="Example content",
+            author=author,
+        )
+
+        self.assertEqual(article.__str__(), "Test Model")
+
