@@ -66,6 +66,15 @@ class ArticleUpdateViewTest(TestCase):
 
 
     def test_author_is_user(self):
-        self.clien
+        self.client.login(username="testuser", password="password")
+
+        response = self.client.get(f"/articles/{self.article.pk}/edit/")
+
+        self.assertEqual(response.status_code, 200)
+        
+        article = response.context["article"]
+        user = response.context["request"].user
+
+        self.assertEqual(article.author, user)
 
 
