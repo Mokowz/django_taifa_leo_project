@@ -25,7 +25,7 @@ class ArticleModelTest(TestCase):
         self.assertEqual(self.article.author, self.author)
 
     def test_get_absolute_url(self):
-        
+
         expected_url = reverse("article_detail", args=[str(self.article.id)])
         actual_url = self.article.get_absolute_url()
         
@@ -36,7 +36,36 @@ class ArticleModelTest(TestCase):
         self.assertEqual(self.article.__str__(), "Test Model")
 
 
+# Test the update view
+class ArticleUpdateViewTest(TestCase):
+    def setUp(self):
+        self.author = get_user_model().objects.create_user(
+            username="testuser", 
+            password="password"
+        )
+        self.article = Article.objects.create(
+            title="Test Model",
+            date=timezone.now(),
+            content="Example content",
+            author=self.author,
+        )
 
-class ArticleViewTest(TestCase):
-    pass
+    def test_update_by_author_redirect(self):
+        self.client.login(username="testuser", password="password")
+
+        response = self.client.post(
+            f'/articles/{self.article.pk}/edit/',
+            {"title": "Updated Title",
+             "content": "Updated Content"
+             }
+        )
+
+        # Test user was redirected to the detail view
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"/articles/{self.article.pk}/")
+
+
+    def test_author_is_user(self):
+        self.clien
+
 
